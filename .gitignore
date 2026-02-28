@@ -1,0 +1,62 @@
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtualenvs
+.venv/
+venv/
+ENV/
+env/
+
+# Environment files
+.env
+.env.*
+
+# Byte-compiled / optimized / DLL files
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+
+# Test / coverage
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Docker
+docker-compose.override.yml
+
+# Firebase
+.firebase/
+firebase-debug.log*
+
+# Misc
+*.sqlite3
+*.db
+*.log
+demo-video.mp4
+
+# Local MVP runtime data
+Backend/LocalMVP/data/chroma/
+Backend/LocalMVP/data/generated/
+Backend/LocalMVP/data/parsed/
+Backend/LocalMVP/data/uploads/
+Backend/LocalMVP/data/*.db
+Backend/LocalMVP/data/*.sqlite3

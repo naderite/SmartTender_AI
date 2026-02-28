@@ -1,0 +1,13 @@
+﻿Sarra Trabelsi
+sarra.trabelsi@example.com
++216 21 333 444
+GitHub: https://github.com/sarradev
+
+Backend engineer with 3 years of experience in Python, Flask, SQL, Docker and Git.
+Worked on REST APIs, authentication modules and reporting systems.
+Languages: French, Arabic.
+Bachelor in Software Engineering.
+
+Experience
+2023 - 2026 Backend Developer at FinOps
+Implemented Flask microservices and PostgreSQL data pipelines.

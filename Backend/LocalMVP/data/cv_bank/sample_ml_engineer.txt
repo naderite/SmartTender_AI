@@ -1,0 +1,14 @@
+﻿Amine Ben Salah
+amine.bensalah@example.com
++216 20 111 222
+LinkedIn: https://www.linkedin.com/in/amine-bensalah
+
+Machine Learning Engineer with 4 years of experience building NLP and recommendation systems.
+Worked with Python, FastAPI, Docker, SQL, PyTorch and TensorFlow.
+Fluent in French and English.
+Master degree in Computer Science.
+
+Experience
+2022 - 2026 ML Engineer at DataLab
+Built NLP pipelines, CV ranking services and document classifiers.
+Developed APIs with FastAPI and deployed services with Docker.

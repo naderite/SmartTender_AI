@@ -1,0 +1,338 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inetum SmartTender</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="brand">
+                <img src="/static/inetum-logo.png" alt="Inetum" class="brand-logo">
+                <div class="brand-text">
+                    <strong>SmartTender Enterprise</strong>
+                    <span>Inetum IT Consulting</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="#workspace">Workspace</a>
+                <a href="#results">Results</a>
+                <a href="/admin">Admin</a>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <header class="hero-block">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <span class="kicker">AI Tender Operations</span>
+                    <h1>Automate Enterprise Tender Intelligence</h1>
+                    <p>
+                        Parse tenders, search across the indexed expert repository, and generate shortlist-ready outputs
+                        through a clean enterprise workflow designed for speed and clarity.
+                    </p>
+                    <div class="hero-proof">
+                        <span>Repository-first workflow</span>
+                        <span>{{ cv_count }} indexed experts ready</span>
+                        <span>Semantic retrieval active</span>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="#workspace" class="btn btn-primary">Run Analysis</a>
+                        <a href="#results" class="btn btn-secondary">View Dashboard</a>
+                    </div>
+                </div>
+
+                <aside class="workflow-panel">
+                    <div class="workflow-head">
+                        <span class="kicker muted-kicker">Workflow</span>
+                        <p>Three-step operational flow</p>
+                    </div>
+                    <div class="workflow-list">
+                        <article>
+                            <span>01</span>
+                            <div>
+                                <strong>Detection</strong>
+                                <p>Parse the tender and structure requirements.</p>
+                            </div>
+                        </article>
+                        <article>
+                            <span>02</span>
+                            <div>
+                                <strong>Matching</strong>
+                                <p>Rank expert profiles through lexical and semantic fit.</p>
+                            </div>
+                        </article>
+                        <article>
+                            <span>03</span>
+                            <div>
+                                <strong>Shortlist</strong>
+                                <p>Generate a report ready for review and presentation.</p>
+                            </div>
+                        </article>
+                    </div>
+                </aside>
+            </div>
+        </header>
+
+        <section class="stat-bar animate-fade-up stagger-1">
+            <div class="container stat-bar-grid">
+                <article>
+                    <span>Indexed profiles</span>
+                    <strong>{{ cv_count }}</strong>
+                </article>
+                <article>
+                    <span>Indexed tenders</span>
+                    <strong>{{ result.run_id if result else 0 }}</strong>
+                </article>
+                <article>
+                    <span>Shortlists generated</span>
+                    <strong>{{ result.run_id if result else 0 }}</strong>
+                </article>
+                <article>
+                    <span>Last run</span>
+                    <strong>{% if result %}#{{ result.run_id }}{% else %}No run{% endif %}</strong>
+                </article>
+        </section>
+
+        <section class="capability-row animate-fade-up stagger-2">
+            <div class="container capability-row-grid">
+                <article class="capability">
+                    <div class="capability-icon">🔍</div>
+                    <span>Detection</span>
+                    <h3>Tender parsing</h3>
+                    <p>Extract skills, seniority, languages, and education constraints from tender sources.</p>
+                </article>
+                <article class="capability">
+                    <div class="capability-icon">🧩</div>
+                    <span>Matching</span>
+                    <h3>Expert retrieval</h3>
+                    <p>Use semantic search and scoring to surface the strongest expert shortlist.</p>
+                </article>
+                <article class="capability">
+                    <div class="capability-icon">📄</div>
+                    <span>Output</span>
+                    <h3>Report generation</h3>
+                    <p>Generate a shortlist artifact fit for internal review and jury demonstration.</p>
+                </article>
+        </section>
+
+        <section id="workspace" class="workspace animate-fade-up stagger-3">
+            <div class="container">
+                <div class="section-title">
+                    <div>
+                        <span class="kicker">Workspace</span>
+                        <h2>Tender analysis command center</h2>
+                    </div>
+                </div>
+
+                <div class="workspace-grid">
+                    <section class="panel panel-large">
+                        <div class="panel-title">
+                            <div>
+                                <span class="kicker muted-kicker">Input</span>
+                                <h3>Launch a tender analysis</h3>
+                            </div>
+                        </div>
+                        <form action="/demo" method="post" enctype="multipart/form-data" class="form-grid">
+                            <label class="input-panel">
+                                <span>Tender document</span>
+                                <input type="file" name="tender_file" accept=".pdf,.txt,.md" required>
+                                <small>Upload the opportunity source. Matching runs automatically against the indexed CV
+                                    repository.</small>
+                            </label>
+                            <button type="submit" class="btn btn-primary full-width">Run Analysis</button>
+                        </form>
+                        {% if error %}
+                        <p class="alert alert-error">{{ error }}</p>
+                        {% endif %}
+                        <div class="repository-strip">
+                            <article>
+                                <span>Expert repository</span>
+                                <strong>{{ cv_count }} indexed profiles</strong>
+                            </article>
+                            <article>
+                                <span>Search engine</span>
+                                <strong>{{ semantic_index_count }} vector entries</strong>
+                            </article>
+                        </div>
+                        <div class="mini-meta">
+                            <span>Repository-first mode</span>
+                            <span>Providers {{ api_keys_configured | length }}</span>
+                            <span>Shortlist ready output</span>
+                        </div>
+                    </section>
+
+                    <section class="panel">
+                        <div class="panel-title">
+                            <div>
+                                <span class="kicker muted-kicker">Tender Summary</span>
+                                <h3>{% if result %}{{ result.tender.title }}{% else %}Awaiting analysis{% endif %}</h3>
+                            </div>
+                        </div>
+                        {% if result %}
+                        <p class="body-copy">{{ result.tender.summary }}</p>
+                        <div class="info-stack">
+                            <article>
+                                <span>Mode</span>
+                                <strong>Indexed repository</strong>
+                            </article>
+                            <article>
+                                <span>Profiles queried</span>
+                                <strong>{{ result.cv_count }}</strong>
+                            </article>
+                            <article>
+                                <span>Run</span>
+                                <strong>#{{ result.run_id }}</strong>
+                            </article>
+                        </div>
+                        {% else %}
+                        <p class="body-copy dimmed">Run an analysis to display the active tender brief.</p>
+                        {% endif %}
+                    </section>
+
+                    <section class="panel">
+                        <div class="panel-title">
+                            <div>
+                                <span class="kicker muted-kicker">Requirements</span>
+                                <h3>Structured extraction</h3>
+                            </div>
+                        </div>
+                        {% if result %}
+                        <details class="group" open>
+                            <summary>Core skills</summary>
+                            <div class="token-wrap">
+                                {% for skill in result.tender.required_skills %}
+                                <span class="token token-gradient">{{ skill }}</span>
+                                {% endfor %}
+                            </div>
+                        </details>
+                        <details class="group" open>
+                            <summary>Languages and seniority</summary>
+                            <div class="token-wrap">
+                                {% for language in result.tender.languages %}
+                                <span class="token token-soft">{{ language }}</span>
+                                {% endfor %}
+                                <span class="token token-soft">{{ result.tender.experience_level }} years</span>
+                                <span class="token token-soft">{{ result.tender.education_level or 'Not detected'
+                                    }}</span>
+                            </div>
+                        </details>
+                        <details class="group">
+                            <summary>Keywords</summary>
+                            <div class="token-wrap">
+                                {% for keyword in result.tender.keywords %}
+                                <span class="token token-muted">{{ keyword }}</span>
+                                {% endfor %}
+                            </div>
+                        </details>
+                        {% else %}
+                        <p class="body-copy dimmed">Extracted requirement groups will appear here.</p>
+                        {% endif %}
+                    </section>
+                </div>
+        </section>
+
+        <section id="results" class="results animate-fade-up stagger-4 section-alt">
+            <div class="container">
+                <div class="section-title section-title-inline">
+                    <div>
+                        <span class="kicker">Results</span>
+                        <h2>Expert ranking</h2>
+                    </div>
+                    {% if result %}
+                    <a href="/artifacts/{{ result.report_path }}" target="_blank" class="btn btn-secondary">Open
+                        Report</a>
+                    {% else %}
+                    <a href="/admin" class="btn btn-secondary">View Dashboard</a>
+                    {% endif %}
+                </div>
+
+                {% if result %}
+                <div class="expert-list">
+                    {% for item in result.ranking %}
+                    <article class="expert-row {% if loop.index == 1 %}expert-row-lead{% endif %}">
+                        <div class="expert-left">
+                            <span class="rank">{{ '%02d' % loop.index }}</span>
+                            <div>
+                                <h3>{{ item.candidate_name }}</h3>
+                                <p>{{ item.source_file }}</p>
+                            </div>
+                        </div>
+
+                        <div class="expert-center">
+                            <div class="score-circle" style="--score: {{ item.score }};">
+                                <div>
+                                    <strong>{{ item.score }}</strong>
+                                    <span>Score</span>
+                                </div>
+                            </div>
+                            <div class="score-bars">
+                                <div>
+                                    <div class="bar-head"><span>Semantic</span><strong>{{ item.semantic_score
+                                            }}</strong>
+                                    </div>
+                                    <div class="bar-track"><span class="bar-fill bar-semantic"
+                                            style="width: {{ item.semantic_score }}%"></span></div>
+                                </div>
+                                <div>
+                                    <div class="bar-head"><span>Lexical</span><strong>{{ item.lexical_score }}</strong>
+                                    </div>
+                                    <div class="bar-track"><span class="bar-fill bar-lexical"
+                                            style="width: {{ item.lexical_score }}%"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="expert-right">
+                            <div>
+                                <span class="chip-label">Matched</span>
+                                <div class="chip-cluster">
+                                    {% if item.matched_skills %}
+                                    {% for skill in item.matched_skills %}
+                                    <span class="chip chip-good">{{ skill }}</span>
+                                    {% endfor %}
+                                    {% else %}
+                                    <span class="chip chip-neutral">No direct match</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div>
+                                <span class="chip-label">Missing</span>
+                                <div class="chip-cluster">
+                                    {% if item.missing_skills %}
+                                    {% for skill in item.missing_skills %}
+                                    <span class="chip chip-bad">{{ skill }}</span>
+                                    {% endfor %}
+                                    {% else %}
+                                    <span class="chip chip-good">No gaps</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <details class="explain-toggle">
+                                <summary>View Explanation</summary>
+                                <div class="explain-body">
+                                    <ul>
+                                        {% for note in item.justification %}
+                                        <li>{{ note }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </details>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

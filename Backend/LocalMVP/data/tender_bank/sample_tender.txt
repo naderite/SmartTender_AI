@@ -1,0 +1,6 @@
+﻿AI Engineer for Smart Tender Automation
+
+We are looking for an AI engineer to support the automation of tender analysis and candidate matching.
+Required skills include Python, FastAPI, machine learning, NLP, SQL and Docker.
+The consultant should have at least 3 years of experience and be able to communicate in French and English.
+Preferred background: Master degree in Computer Science or Software Engineering.

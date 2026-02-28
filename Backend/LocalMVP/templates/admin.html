@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inetum SmartTender Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="brand">
+                <img src="/static/inetum-logo.png" alt="Inetum" class="brand-logo">
+                <div class="brand-text">
+                    <strong>SmartTender Enterprise</strong>
+                    <span>Operations dashboard</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="/">Workspace</a>
+                <a href="/admin">Admin</a>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <header class="hero-block compact-hero animate-fade-up">
+            <div class="container hero-grid compact-grid">
+                <div class="hero-copy compact-copy">
+                    <span class="kicker">Admin</span>
+                    <h1>Repository health and shortlist traceability</h1>
+                    <p>
+                        Inspect indexed expert profiles, parsed tenders, and generated shortlist runs through a minimal
+                        operations interface.
+                    </p>
+                </div>
+                <aside class="workflow-panel compact-panel">
+                    <div class="workflow-head">
+                        <span class="kicker muted-kicker">System</span>
+                        <p>Current platform state</p>
+                    </div>
+                    <div class="workflow-list compact-workflow">
+                        <article>
+                            <span>{{ cv_count }}</span>
+                            <div>
+                                <strong>CV records</strong>
+                                <p>Stored in SQLite</p>
+                            </div>
+                        </article>
+                        <article>
+                            <span>{{ semantic_index_count }}</span>
+                            <div>
+                                <strong>Vector entries</strong>
+                                <p>Indexed in Chroma</p>
+                            </div>
+                        </article>
+                        <article>
+                            <span>{{ api_keys_configured | length }}</span>
+                            <div>
+                                <strong>AI providers</strong>
+                                <p>Configured and available</p>
+                            </div>
+                        </article>
+                    </div>
+                </aside>
+            </div>
+        </header>
+
+        <section class="stat-bar top-gap-lg animate-fade-up stagger-1">
+            <div class="container stat-bar-grid">
+                <article>
+                    <span>CVs</span>
+                    <strong>{{ cv_rows | length }}</strong>
+                </article>
+                <article>
+                    <span>Tenders</span>
+                    <strong>{{ tender_rows | length }}</strong>
+                </article>
+                <article>
+                    <span>Runs</span>
+                    <strong>{{ run_rows | length }}</strong>
+                </article>
+                <article>
+                    <span>Repository</span>
+                    <strong>{{ semantic_index_count }}</strong>
+                </article>
+        </section>
+
+        <section class="admin-grid top-gap-lg animate-fade-up stagger-2">
+            <div class="container admin-grid-container">
+                <section class="panel list-panel">
+                    <div class="section-title">
+                        <div>
+                            <span class="kicker">Profiles</span>
+                            <h2>Indexed experts</h2>
+                        </div>
+                    </div>
+                    <div class="simple-list">
+                        {% for row in cv_rows %}
+                        <article class="simple-item">
+                            <div>
+                                <strong>{{ row.full_name }}</strong>
+                                <p>{{ row.source_name }}</p>
+                            </div>
+                            <div class="simple-meta">
+                                <span>{{ row.experience_years }} yrs</span>
+                                <span>{{ row.education_level or 'n/a' }}</span>
+                                <span>{{ row.updated_at }}</span>
+                            </div>
+                        </article>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="panel list-panel">
+                    <div class="section-title">
+                        <div>
+                            <span class="kicker">Tenders</span>
+                            <h2>Stored analyses</h2>
+                        </div>
+                    </div>
+                    <div class="simple-list">
+                        {% for row in tender_rows %}
+                        <article class="simple-item">
+                            <div>
+                                <strong>{{ row.title }}</strong>
+                                <p>{{ row.source_name }}</p>
+                            </div>
+                            <div class="simple-meta">
+                                <span>#{{ row.id }}</span>
+                                <span>{{ row.created_at }}</span>
+                            </div>
+                        </article>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="panel list-panel top-gap-lg animate-fade-up stagger-3 section-alt">
+            <div class="container">
+                <div class="section-title section-title-inline">
+                    <div>
+                        <span class="kicker">Shortlists</span>
+                        <h2>Generated reports</h2>
+                    </div>
+                </div>
+                <div class="simple-list simple-list-quiet">
+                    {% for row in run_rows %}
+                    <article class="simple-item report-item">
+                        <div>
+                            <strong>{{ row.tender_title }}</strong>
+                            <p>{{ row.tender_source }}</p>
+                        </div>
+                        <div class="simple-meta report-meta">
+                            <span>Run #{{ row.id }}</span>
+                            <span>{{ row.created_at }}</span>
+                            <a class="list-button" href="/artifacts/{{ row.report_href }}" target="_blank">Open
+                                Report</a>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+        </section>
+    </main>
+</body>
+
+</html>
