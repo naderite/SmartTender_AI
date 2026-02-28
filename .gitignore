@@ -51,7 +51,6 @@ firebase-debug.log*
 *.sqlite3
 *.db
 *.log
-demo-video.mp4
 
 # Local MVP runtime data
 Backend/LocalMVP/data/chroma/
